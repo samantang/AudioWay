@@ -1,0 +1,26 @@
+<ion-item color="medium" (click)="presentActionSheetDetailChoix()">
+    <!-- <ion-thumbnail slot="start">
+      <ion-img [src]="offer.imageUrl"></ion-img>
+    </ion-thumbnail> -->
+    <ion-label style="background: rgb(245, 242, 242); padding: 10px;" >
+      <ion-text style="font-weight: lighter; color: rgb(250, 32, 16);">
+        {{ lePoste }}
+      </ion-text>
+      <h2 style="font: bold; color: rgb(0, 162, 255);"> {{ choix.localite}} &nbsp; {{ choix.departement }}  </h2>
+      <h1 style="font: bold; color: rgb(25, 0, 255);">{{ choix.region }}</h1>
+      
+      <!-- <div class="offer-details">
+        <ion-icon name="calendar" color="primary"></ion-icon>
+        <ion-text color="tertiary" class="space-left">{{
+          choix.dateContact | date
+        }}</ion-text>
+        <span class="space-left">to</span>
+        <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
+        <ion-text color="tertiary" class="space-left">{{
+          offer.availableTo | date
+        }}</ion-text>
+      </div> -->
+    </ion-label>
+  </ion-item>
+  <!-- <hr style="border-top: 1px double #8c8b8b;"> -->
+  

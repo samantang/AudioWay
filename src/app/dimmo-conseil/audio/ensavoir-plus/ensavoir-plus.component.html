@@ -1,0 +1,45 @@
+    <ion-header translucent>
+      <ion-toolbar>
+          <ion-buttons slot="start">
+              <ion-back-button defaultHref="/"></ion-back-button>
+            </ion-buttons>
+        <ion-title>En savoir plus</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen padding scroll-y="false">
+      <ion-slides pager="true" [options]="slideOpts">
+
+        <ion-slide >
+          <h1 style="text-align: center; color: dodgerblue;">1/3</h1>
+          <img src="./assets/icon/slide-1.png"/>
+          <h2>Politique <b>de confidentialité</b></h2>
+          <p>Nous <b>Nous engageons</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        </ion-slide>
+
+        <ion-slide >
+          <h1 style="text-align: center; color: dodgerblue;">2/3</h1>
+          <img src="./assets/icon/slide-2.png"/>
+          <h2>Un autre Titre</h2>
+          <p><b>Ionic Framework</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </ion-slide>
+
+        <!-- <ion-slide >
+          <img src="./slide-3.png"/>
+          <h2>What is Ionic Pro?</h2>
+          <p><b>Ionic Pro</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new level of app development agility to mobile dev teams.</p>
+        </ion-slide> -->
+
+        <ion-slide >
+          <h1 style="text-align: center; color: dodgerblue;">2/3</h1>
+          <!-- <img src="./slide-4.png"/> -->
+          <h2>Comment ça marche ?</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit  Ut enim ad minim veniam</p>
+          <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+          <ion-button (click)="onChercheOpportunite()" expand="block">je cherche une opportunité<ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+          <!-- <ion-button (click)="onChercheOpportunite()" fill="clear">je cherche une opportunité <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button> -->
+        </ion-slide>
+
+      </ion-slides>
+    </ion-content>
