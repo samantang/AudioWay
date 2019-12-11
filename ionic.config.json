@@ -1,5 +1,7 @@
 {
   "name": "dimmo-conseil1",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

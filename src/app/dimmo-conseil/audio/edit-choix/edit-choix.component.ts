@@ -138,7 +138,7 @@ export class EditChoixComponent implements OnInit {
   public onassistantAudioCdi() {
     console.log('assistantAudioCdi: ' + this.assistantAudioCdi);
   }
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.choix = new Choix(
       'id',
     'userId',
@@ -192,6 +192,9 @@ export class EditChoixComponent implements OnInit {
     if (this.choixSub) {
       this.choixSub.unsubscribe();
     }
+  }
+  onAddDepartement(){
+    console.log('ajouter departement');
   }
 
 }

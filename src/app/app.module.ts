@@ -15,6 +15,8 @@ import { MatSliderModule, MatStepperModule, MatButtonModule, MatFormFieldModule,
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { InscritDetailsModalComponent } from './dimmo-conseil/inscrits/inscrit-details-modal/inscrit-details-modal.component';
 import { NewChoixComponent } from './dimmo-conseil/audio/new-choix/new-choix.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, InscritDetailsModalComponent],
@@ -32,7 +34,8 @@ import { NewChoixComponent } from './dimmo-conseil/audio/new-choix/new-choix.com
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
-    IonicModule.forRoot() ],
+    IonicModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) ],
   providers: [
     NewChoixComponent,
     StatusBar,

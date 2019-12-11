@@ -9,6 +9,15 @@
     </ion-header>
 
     <ion-content>
+      <ion-list *ngIf="!userRoleUser">
+          <ion-menu-toggle>
+              <ion-item  lines="none" routerLink="/auth">
+                <ion-icon name="business" slot="start" color="danger"></ion-icon>
+                <ion-label color="danger">Merci de vous identifier</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+      </ion-list>
+      
       <ion-list *ngIf="userRoleUser">
         <ion-menu-toggle>
           <ion-item  lines="none" routerLink="/dimmo-conseil/tabs/dimmo">
@@ -55,7 +64,7 @@
           <ion-menu-toggle *ngIf="userRoleAdmin">
             <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/audio">
               <ion-icon name="checkbox-outline" slot="start"></ion-icon>
-              <ion-label>Tous LES CHOIX</ion-label>
+              <ion-label>TOUS LES CHOIX</ion-label>
             </ion-item>
           </ion-menu-toggle><hr>
           <ion-menu-toggle *ngIf="userRoleAdmin">

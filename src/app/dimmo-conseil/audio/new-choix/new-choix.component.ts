@@ -137,7 +137,7 @@ export class NewChoixComponent implements OnInit {
       this.presentAlertLieuDeTravailConfirm();
       return;
      }
-    this.choix = new Choix(
+     this.choix = new Choix(
     'id',
     localStorage.getItem('userId'),
     this.resRegionCdd,
@@ -157,20 +157,16 @@ export class NewChoixComponent implements OnInit {
     this.quatriemeFormGroup.value.momentsContact,
     null);
 
-    // console.log(this.secondFormGroup.value.region + ' '+ this.thirdFormGroup.value.enseignesNon + ' ' +this.quatriemeFormGroup.value.momentsContact)
-    // console.log(this.signUpForm.value.region +' '+this.signUpForm.value.departement + ' '+ this.signUpForm.value.localite 
-    // + ' '+ this.signUpForm.value.enseignesNon +' ' +this.signUpForm.value.joursContact+ ' '+this.signUpForm.value.momentsContact,
-    //  this.signUpForm.value.telephone  );
-    //   return;
 
-    this.storeChoixData(this.resRegionCdd, this.resRegionCdi, this.audioCdd, this.audioCdi,
-      this.audiodVolant, this.assistantAudioCdd, this.assistantAudioCdi, this.technicienCdd, 
-      this.technicienCdi, this.regionChoisie, this.secondFormGroup.value.departement, this.secondFormGroup.value.localite, 
-      this.thirdFormGroup.value.enseignesNon, this.quatriemeFormGroup.value.joursContact, this.quatriemeFormGroup.value.momenstContact, null);
+     this.storeChoixData(this.resRegionCdd, this.resRegionCdi, this.audioCdd, this.audioCdi,
+      this.audiodVolant, this.assistantAudioCdd, this.assistantAudioCdi, this.technicienCdd,
+      this.technicienCdi, this.regionChoisie, this.secondFormGroup.value.departement, this.secondFormGroup.value.localite,
+      this.thirdFormGroup.value.enseignesNon, this.quatriemeFormGroup.value.joursContact,
+      this.quatriemeFormGroup.value.momenstContact, null);
     // this.signUpForm.reset();
 
     // s'il ya dejà une personne connectée, alors on recupère son ID q'uon rajoute au choix avant de finir
-    if(localStorage.getItem("clefUser")){
+     if(localStorage.getItem("clefUser")){
         this.choix.userId = localStorage.getItem('userId');
         this.loadingCtrl
           .create({
@@ -183,8 +179,8 @@ export class NewChoixComponent implements OnInit {
             }
               );
           });
-    }else{
-      
+    } else {
+
       console.log('personne est connecté actuellement ...');
       this.presentAlerInscriptiontPrompt();
     }
@@ -220,22 +216,22 @@ export class NewChoixComponent implements OnInit {
     dateCreation: Date
   ) {
     const data = JSON.stringify({
-      resRegionCdd: resRegionCdd,
-      resRegionCdi: resRegionCdi,
-      audioCdd: audioCdd,
-      audioCdi: audioCdi,
-      audioVolant: audioVolant,
-      assistantAudioCdd: assistantAudioCdd,
-      assistantAudioCdi: assistantAudioCdi,
-      technicienCdd: technicienCdd,
-      technicienCdi: technicienCdi,
-      region: region,
-      departement: departement,
-      localite: localite,
-      enseignesNon: enseignesNon,
-      joursContact: joursContact,
-      momentsContact: momentsContact,
-      dateCreation: dateCreation
+      resRegionCdd,
+      resRegionCdi,
+      audioCdd,
+      audioCdi,
+      audioVolant,
+      assistantAudioCdd,
+      assistantAudioCdi,
+      technicienCdd,
+      technicienCdi,
+      region,
+      departement,
+      localite,
+      enseignesNon,
+      joursContact,
+      momentsContact,
+      dateCreation
     });
     Plugins.Storage.set({ key: 'choixData', value: data });
   }
@@ -252,7 +248,7 @@ export class NewChoixComponent implements OnInit {
         this.choixService.addChoix(this.choix).subscribe(() => {
           loadingEl.dismiss();
         }
-          ); 
+          );
       });
   }
   getChoix(localId: string) {
@@ -319,9 +315,8 @@ export class NewChoixComponent implements OnInit {
   }
   async presentAlerInscriptiontPrompt() {
     this.router.navigate(['/auth']);
-  
+
   }
-  // ----------------------------------
   async presentAlertPosteConfirm() {
     const alert = await this.alertCtrl.create({
       header: 'Le POSTE SOUHAITE!',
@@ -345,7 +340,6 @@ export class NewChoixComponent implements OnInit {
 
     await alert.present();
   }
-  // ----------------------------------
   async presentAlertLieuDeTravailConfirm() {
     const alert = await this.alertCtrl.create({
       header: 'Le LIEU DE TRAVAIL SOUHAITE!',

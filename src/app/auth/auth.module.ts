@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AuthPage } from './auth.page';
+import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AuthPage]
+  declarations: [AuthPage, AuthComponent]
 })
 export class AuthPageModule {}

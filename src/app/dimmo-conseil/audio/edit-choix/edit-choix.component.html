@@ -4,24 +4,16 @@
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
       <ion-title>MODIFICATION des critères de recherche</ion-title>
-      <!-- <ion-buttons slot="primary">
-        <ion-button (click)="onSubmit()" >
-          <ion-icon name="checkmark" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons> -->
     </ion-toolbar>
   </ion-header>
 
-<form (ngSubmit)="onSubmit()" #f="ngForm">
-<mat-vertical-stepper [linear]="isLinear" #stepper>
+<!-- <form>
+<mat-vertical-stepper #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>LE POSTE SOUHAITE</ng-template>
         <ion-row>
           <ion-col size="12">
-            <!-- <ion-text style="color: indigo;">Par quel poste etes vous interessé?</ion-text> -->
-            <!-- <ion-card>
-              <ion-card-content> -->
                 <ion-text style="text-align: center;" color="secondary">Responsable Reginal</ion-text>
                 <ion-row>
                   <ion-col size="6">
@@ -38,21 +30,19 @@
                       </ion-item>
                   </ion-col>
                 </ion-row>
-              <!-- </ion-card-content>
-            </ion-card> -->
-            <!-- <ion-card>
-                <ion-card-content> -->
+              
                   <ion-text color="secondary">Audioprothésite</ion-text>
                   <ion-row>
                     <ion-col size="6">
                         <ion-item>
-                            <!-- <ion-label>CDI</ion-label> -->CDI
+                            
+                          CDI
                             <ion-toggle slot="start" name="audioCdi" color="success" [(ngModel)]="audioCdi" (ionChange)="onaudioCdi()" [ngModelOptions]="{standalone: true}"></ion-toggle>
                         </ion-item>
                     </ion-col>
                     <ion-col size="6">
                         <ion-item>
-                            <!-- <ion-label>CDD</ion-label> -->CDD
+                            CDD
                             <ion-toggle slot="start" name="audioCdd" color="success" [(ngModel)]="audioCdd" (ionChange)="onaudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
                         </ion-item>
                     </ion-col>
@@ -63,26 +53,7 @@
                         </ion-item>
                     </ion-col>
                   </ion-row><hr>
-                <!-- </ion-card-content>
-              </ion-card> -->
-              <!-- <ion-card>
-                  <ion-card-content>
-                    <ion-title color="secondary">Audioprothésite</ion-title>
-                      <ion-item>
-                      <ion-label>CDI</ion-label>
-                        <ion-toggle slot="start" name="assistantAudioCdd" color="success" [(ngModel)]="assistantAudioCdd" (ionChange)="onassistantAudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
-                      </ion-item>
-                      <ion-item>
-                          <ion-label>CDD</ion-label>
-                            <ion-toggle slot="start" name="assistantAudioCdi" color="success" [(ngModel)]="assistantAudioCdi" (ionChange)="onassistantAudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
-                      </ion-item>
-                  </ion-card-content>
-                </ion-card> -->
-                <!-- <ion-card> -->
-                    <!-- <ion-card-header>
-                      <ion-title color="secondary">Assistant(e) Audio</ion-title>
-                    </ion-card-header> -->
-                    <!-- <ion-card-content> -->
+                
                         <ion-text color="secondary">Assistant(e) Audio</ion-text>
                         <ion-row>
                           <ion-col size="6">
@@ -98,21 +69,16 @@
                               </ion-item>
                           </ion-col>
                         </ion-row>
-                    <!-- </ion-card-content>
-                  </ion-card> -->
+                   
           </ion-col>
         </ion-row>
-      <!-- <div style="text-align: center;">
-        <button style="color: darkblue; font-weight: bold;" mat-button matStepperNext>SUIVANT</button>
-      </div> -->
+     
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>VOTRE LIEU DE TRAVAIL SOUHAITE</ng-template>
-      <!-- <mat-form-field>
-        <input matInput  formControlName="secondCtrl" >
-      </mat-form-field> -->
+     
       <div class="form-group">
           <label for="region" style="color: rgb(31, 230, 120); font-weight: bold;">REGION</label>
           <select (change)="onChange($event.target.value)"  name="region" id="region" ngModel [ngModelOptions]="{standalone: true}">
@@ -347,10 +313,7 @@
               </ion-row>
 
         </div>
-      <!-- <div>
-        <button style="color: darkblue; font-weight: bold;" mat-button matStepperPrevious>RETOUR</button>
-        <button style="color: darkblue; font-weight: bold;" mat-button matStepperNext>SUIVANT</button>
-      </div> -->
+      
     </form>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
@@ -368,31 +331,15 @@
                       </ion-col>
                   </ion-row>
               </div>
-              <!-- <div class="well">
-                  <ion-text style="color: darkgreen">des enseingnes pour lesquelles vous ne souhaitez pas travailler en priorité?</ion-text>
-                    <ion-row>
-                        <ion-col size-sm="6" offset-sm="3">
-                          <ion-item>
-                            <ion-label position="floating">Préciser les enseignes</ion-label>
-                            <ion-textarea rows="2" name="enseignesOk" ngModel [ngModelOptions]="{standalone: true}"></ion-textarea>
-                          </ion-item>
-                        </ion-col>
-                    </ion-row>
-              </div> -->
+              
           </div>
         </form>
-    <!-- <div>
-      <button style="color: darkblue; font-weight: bold;" mat-button matStepperPrevious>RETOUR</button>
-      <button style="color: darkblue; font-weight: bold;" mat-button matStepperNext>SUIVANT</button> -->
-      <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
-    <!-- </div> -->
+   
   </mat-step>
   <mat-step [stepControl]="fourthFormGroup">
       <form [formGroup]="fourthFormGroup">
       <ng-template matStepLabel>VOUS CONTACTER</ng-template>
-      <!-- <ion-list> -->
-          <!-- <p style="text-decoration: cyan">Nous vous proposons de vous contacter afin de vous détailler nos opportunités
-          </p> -->
+      
           <p>Indiquez-nous à quel moment vous êtes joignables</p>
           <ion-item>
             <ion-label>Date</ion-label>
@@ -402,11 +349,8 @@
             <ion-label>Heure</ion-label>
             <ion-datetime display-format="h:mm" picker-format="h:mm" placeholder="Choisir Heure" name="heure" ngModel [ngModelOptions]="{standalone: true}"></ion-datetime>
           </ion-item>
-        <!-- </ion-list> -->
         </form><br>
-      <!-- <button style="color: darkblue; font-weight: bold;" mat-button matStepperPrevious>RETOUR</button> -->
-      <!-- <button mat-button (click)="stepper.reset()">Tout effacer</button> -->
       <button type="submit" style="color: darkblue; font-weight: bold;" mat-button matStepperNext>MODIFIER VOS CRITERES</button>
   </mat-step>
 </mat-vertical-stepper>
-</form>
+</form> -->

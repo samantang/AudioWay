@@ -91,41 +91,32 @@
             <p>09h00 - 12h00 | 13h30 - 17h00</p>
           </ion-label>
         </ion-item><hr>
-          <h1 style="font-weight: bold; color: #a423fa;">NOUS ECRIRE</h1>
-        <form onsubmit="processForm(event)">
-            <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <h2 style="font-weight: bold; color: #a423fa;">NOUS ECRIRE</h2>
+        <form [formGroup]="formGroup">
+            <ion-list lines="full" >
               <ion-item>
                 <ion-label position="floating">Votre Nom <ion-text color="danger">*</ion-text></ion-label>
-                <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+                <ion-input required type="text" formControlName="nom" name="nom"></ion-input>
               </ion-item>
     
               <ion-item>
                 <ion-label position="floating">Votre Prénom <ion-text color="danger">*</ion-text></ion-label>
-                <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
+                <ion-input required type="text" formControlName="prenom" name="prenom"></ion-input>
               </ion-item>
               
               <ion-item>
                 <ion-label position="floating">Sujet</ion-label>
-                <ion-input></ion-input>
+                <ion-input type="text" formControlName="sujet" name="sujet"></ion-input>
               </ion-item>
     
-              <!-- <ion-item>
-                <ion-label position="stacked">Address</ion-label>
-                <ion-input placeholder="Address Line 1"></ion-input>
-                <ion-input placeholder="Address Line 2"></ion-input>
-                <ion-input placeholder="City"></ion-input>
-                <ion-input placeholder="State"></ion-input>
-                <ion-input placeholder="Zip Code"></ion-input>
-              </ion-item> -->
-    
               <ion-item>
-                <ion-label position="stacked">Ecrire</ion-label>
-                <ion-textarea></ion-textarea>
+                <ion-label position="stacked">Nous Ecrire</ion-label>
+                <ion-textarea formControlName="nousecrire" name="nousecrire"></ion-textarea>
               </ion-item>
             </ion-list>
     
             <div class="ion-padding">
-              <ion-button expand="block" type="submit" class="ion-no-margin">Envoyer</ion-button>
+              <ion-button expand="block" type="submit" (click)="onSubmit()" class="ion-no-margin">Envoyer</ion-button>
             </div>
           </form>
     

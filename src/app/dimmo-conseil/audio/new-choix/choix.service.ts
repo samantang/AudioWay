@@ -5,6 +5,7 @@ import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 
 
 import { Choix } from './choix.model';
+import { Message } from './message.model';
 
 interface ChoixData {
    id: string;
@@ -36,6 +37,12 @@ interface ChoixData {
 
     get Choix() {
         return this._choix.asObservable();
+    }
+
+    private _messages = new BehaviorSubject<Message[]>([]);
+
+    get Messages (){
+      return this._messages.asObservable();
     }
 
     constructor(private http: HttpClient) {}
@@ -105,7 +112,6 @@ interface ChoixData {
       choix.joursContact,
       choix.momentsContact,
       choix.dateCreation);
-
 
       return this.http
       .post<{ name: string }>(
@@ -202,4 +208,34 @@ interface ChoixData {
           })
         );
       }
+      addMessage(message: Message) {
+        let generatedId: string;
+        const newMessage = new Message(
+        Math.random().toString(),
+        message.nom,
+        message.prenom,
+        message.sujet,
+        message.nousEcrire,
+        message.date);
+  
+        return this.http
+        .post<{ name: string }>(
+          'https://dimmo-51817.firebaseio.com/messages.json',
+          {
+            ...newMessage,
+            id: null
+          }
+        )
+        .pipe(
+          switchMap(resData => {
+            generatedId = resData.name;
+            return this._messages;
+          }),
+          take(1),
+          tap(messages => {
+            newMessage.id = generatedId;
+            this._messages.next(messages.concat(newMessage));
+          })
+        );
+        }
   }

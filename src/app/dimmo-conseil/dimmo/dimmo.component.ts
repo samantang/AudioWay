@@ -1,8 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController, LoadingController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, NgForm} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm, FormControl} from '@angular/forms';
+import { ChoixService } from '../audio/new-choix/choix.service';
+import { Message } from '../audio/new-choix/message.model';
 
 @Component({
   selector: 'app-dimmo',
@@ -15,45 +17,79 @@ export class DimmoComponent implements OnInit {
   actionSheet: any;
   nbOpportunités: number;
   contactForm: FormGroup;
-  disabledSubmitButton: boolean = true;
+  disabledSubmitButton = true;
   optionsSelect: Array<any>;
   clef = '';
 
-  @HostListener('input') oninput() {
+  // @HostListener('input') oninput() {
 
-    if (this.contactForm.valid) {
-      this.disabledSubmitButton = false;
-      }
-    }
+  //   if (this.contactForm.valid) {
+  //     this.disabledSubmitButton = false;
+  //     }
+  //   }
+  formGroup: FormGroup;
 
   constructor(public actionSheetController: ActionSheetController,
               public router: Router,
-              private fb: FormBuilder) { 
-                // location.reload();
-                this.contactForm = fb.group({
-                  'contactFormName': ['', Validators.required],
-                  'contactFormEmail': ['', Validators.compose([Validators.required, Validators.email])],
-                  'contactFormSubjects': ['', Validators.required],
-                  'contactFormMessage': ['', Validators.required],
-                  'contactFormCopy': [''],
-                  });
+              private fb: FormBuilder,
+              private choixService: ChoixService,
+              public toastController: ToastController,
+              public loadingController: LoadingController) {
+                // this.contactForm = fb.group({
+                //   'contactFormName': ['', Validators.required],
+                //   'contactFormEmail': ['', Validators.compose([Validators.required, Validators.email])],
+                //   'contactFormSubjects': ['', Validators.required],
+                //   'contactFormMessage': ['', Validators.required],
+                //   'contactFormCopy': [''],
+                //   }
+                //   );
               }
 
-  onSubmit() {
-    console.log('onSubmit ....... ');
-    // this.connectionService.sendMessage(this.contactForm.value).subscribe(() => {
-    // alert('Your message has been sent.');
-    // this.contactForm.reset();
-    // this.disabledSubmitButton = true;
-    //             }, error => {
-    //               console.log('Error', error);
-    //             });
-    }
-
-  ngOnInit() {
+    ngOnInit() {
     console.log(localStorage.getItem('clef'));
+    this.formGroup = new FormGroup({
+      nom: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      prenom: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      sujet: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      nousecrire: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      })
+    });
   }
-  
+
+  onSubmit() {
+    this.loadingController
+      .create({
+        message: 'Prise en charge de votre message ...'})
+      .then(loadingEl => {
+        loadingEl.present();
+        this.choixService.addMessage(new Message('', this.formGroup.value.nom,
+         this.formGroup.value.prenom, this.formGroup.value.sujet, this.formGroup.value.nousecrire, null)).subscribe(() => {
+          loadingEl.dismiss();
+        }
+          );
+        this.formGroup.reset();
+        this.presentToast();
+      });
+
+    }
+    async presentToast() {
+      const toast = await this.toastController.create({
+        message: 'Nous vous remercions et vous recontacterons très rapidement',
+        duration: 4000
+      });
+      toast.present();
+    }
 
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
@@ -85,7 +121,7 @@ export class DimmoComponent implements OnInit {
         handler: () => {
           console.log('Delete clicked');
         }
-      },{
+      }, {
         text: 'Nous nous engageons',
         icon: 'arrow-dropright-circle',
         handler: () => {
