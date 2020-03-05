@@ -18,17 +18,20 @@ import {MatStepperModule} from '@angular/material/stepper';
 })
 export class EditChoixComponent implements OnInit {
   @ViewChild('f', {static: false}) signUpForm: NgForm;
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
+  quatriemeFormGroup: FormGroup;
+  isEditable = false;
+
   choix: Choix;
   choixId: string;
   form: FormGroup;
   isLoading = false;
   private choixSub: Subscription;
 
-  regionChoisie: '';
+  regionChoisie = 'no';
       public resRegionCdd: boolean;
       public resRegionCdi: boolean;
       public audioCdd: boolean;
@@ -55,14 +58,35 @@ export class EditChoixComponent implements OnInit {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: []
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: []
+    this.thirdFormGroup = new FormGroup({
+      enseignesNon: new FormControl(null, {
+        updateOn: 'blur'
+      })
     });
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtr: []
+    this.quatriemeFormGroup = new FormGroup ({
+      joursContact: new FormControl(null, {
+        updateOn: 'blur'
+      }),
+      momentsContact: new FormControl(null, {
+        updateOn: 'blur'
+      }),
+      telephone: new FormControl(null, {
+        updateOn: 'blur'
+      })
     });
-    this.fourthFormGroup = this._formBuilder.group({
-      fourthCtrl: []
+    this.secondFormGroup = new FormGroup({
+      localite: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      region: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      departement: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      })
     });
 
     this.route.paramMap.subscribe(paramMap => {
@@ -88,19 +112,15 @@ export class EditChoixComponent implements OnInit {
               })
             });
             this.isLoading = false;
-            // console.log(this.choix.resRegionCdi);
-            // if(this.choix.resRegionCdi === true){
-            //   console.log('le resRegional est true');
-            // }
           },
           error => {
             this.alertCtrl
               .create({
-                header: 'Une erreur s est produite!',
+                header: 'Une erreur s\'est produite!',
                 message: 'Le Choix ne peut pas etre recuperer, merci de réessayer.',
                 buttons: [
                   {
-                    text: 'Daccord',
+                    text: 'D\'accord',
                     handler: () => {
                       this.router.navigate(['/dimmo-conseil/tabs/audio']);
                     }
@@ -138,10 +158,16 @@ export class EditChoixComponent implements OnInit {
   public onassistantAudioCdi() {
     console.log('assistantAudioCdi: ' + this.assistantAudioCdi);
   }
-  onSubmit() {
+  public ontechnicienCdi() {
+    console.log('technicienCdi: ' + this.technicienCdi);
+  }
+  public ontechnicienCdd() {
+    console.log('technicienCdd: ' + this.technicienCdd);
+  }
+  onSubmitt() {
     this.choix = new Choix(
-      'id',
-    'userId',
+    this.choixId,
+    this.choix.userId,
     this.resRegionCdd,
     this.resRegionCdi,
     this.audioCdd,
@@ -151,41 +177,33 @@ export class EditChoixComponent implements OnInit {
     this.assistantAudioCdi,
     this.technicienCdd,
     this.technicienCdi,
-    this.signUpForm.value.region,
-    this.signUpForm.value.departement,
-    this.signUpForm.value.localite,
-    this.signUpForm.value.enseignesNon,
-    this.signUpForm.value.jourContact,
-    this.signUpForm.value.momentContact,
-    null);;
-    // if (!this.form.valid) {
-    //   return;
-    // }
-    console.log('ResRegionCdi: ' + this.choix.resRegionCdi);
-    console.log('la loc: ' + this.signUpForm.value.localite);
-    console.log('la region: ' + this.regionChoisie);
-    console.log('la date: ' + this.signUpForm.value.date);
-    console.log('les enseinges Ok: ' + this.signUpForm.value.enseignesOk);
-    console.log('les enseignes Non: ' + this.signUpForm.value.enseignesNon);
+    this.regionChoisie,
+    this.secondFormGroup.value.departement,
+    this.secondFormGroup.value.localite,
+    this.thirdFormGroup.value.enseignesNon,
+    this.quatriemeFormGroup.value.joursContact,
+    this.quatriemeFormGroup.value.momentsContact,
+    null,
+    null);
     this.router.navigate(['/dimmo-conseil/tabs/audio']);
 
-
-    // this.loadingCtrl
-    //   .create({
-    //     message: 'Modification du choix ...'
-    //   })
-    //   .then(loadingEl => {
-    //     loadingEl.present();
-    //     this.choixService
-    //       .updateChoix(
-    //         this.choix
-    //       )
-    //       .subscribe(() => {
-    //         loadingEl.dismiss();
-    //         this.form.reset();
-    //         this.router.navigate(['/dimmo-conseil/tabs/audio']);
-    //       });
-    //   });
+    this.loadingCtrl
+      .create({
+        message: 'Modification des critères du choix ...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.choixService
+          .updateChoix(
+            this.choix
+          )
+          .subscribe(() => {
+            loadingEl.dismiss();
+            this.form.reset();
+            this.router.navigate(['/dimmo-conseil/tabs/audio']);
+            location.reload();
+          });
+      });
   }
 
   ngOnDestroy() {

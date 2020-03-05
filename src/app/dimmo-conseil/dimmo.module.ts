@@ -10,6 +10,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { InscritDetailsModalComponent } from './inscrits/inscrit-details-modal/inscrit-details-modal.component';
+import { AuthService } from '../auth/auth.service';
 
 @NgModule({
   imports: [

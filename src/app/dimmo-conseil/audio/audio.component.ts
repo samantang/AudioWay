@@ -4,6 +4,7 @@ import { ChoixService } from './new-choix/choix.service';
 import { Router } from '@angular/router';
 import { Choix } from './new-choix/choix.model';
 import { IonItemSliding } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-audio',
@@ -12,40 +13,60 @@ import { IonItemSliding } from '@ionic/angular';
 })
 export class AudioComponent implements OnInit {
 
+  choixSub: Subscription;
   choix: Choix [];
+  mesChoix : Choix [] = [];
   isLoading = false;
-  private choixSub: Subscription;
-  userLoged = false;
+  // '', '', true, true, true, true, true, true, true, true, true, '', '', '', null, null, null, null
+  opportunitesSub: Subscription;
+  unChoix: Choix [];
 
-  constructor(private choixService: ChoixService, private router: Router) { }
+  constructor(private choixService: ChoixService, private router: Router, private authSvce: AuthService) { }
 
   ngOnInit() {
-    // console.log('le userId est: ' + localStorage.getItem('userId'));
-    this.choixSub = this.choixService.Choix.subscribe(choix => {
+    this.choixSub = this.choixService.fetchChoix().subscribe(choix => {
       this.choix = choix;
+      this.choix.forEach(element => {
+        console.log('le userId du choix: ' + element.userId)
+        console.log('le userId storage: ' + localStorage.getItem('userId'));
+        if (element.userId === localStorage.getItem('userId')) {
+          console.log('CECI EST UN CHOIX DE LUTILISATEUR CONNECTE')
+          this.mesChoix.push(element)
+          // if (!this.mesChoix) {
+          //   console.log('il ya rien dans mesChoix')
+          //   this.mesChoix.push(element)    
+          // } else {
+            
+          // }
+        }
+      });
     });
-    if (localStorage.getItem('clefUser') === 'user'){
-      this.userLoged = true;
-    }
   }
-
   ionViewWillEnter(){
-   this.isLoading = true;
-   this.choixService.fetchChoix().subscribe(() => {
-    //  this.isLoading = false;
-   });
-  }
+    this.isLoading = true;
+    this.choixService.fetchChoix().subscribe(() => {
+     //  this.isLoading = false;
+    });
+   }
+   
+ 
+   ngOnDestroy () {
+     if(this.choixSub){
+       this.choixSub.unsubscribe();
+     }
+   }
+ 
+   onEdit(choixId: string, slidingItem: IonItemSliding) {
+     slidingItem.close();
+     this.router.navigate(['/', 'dimmo-conseil', 'tabs', 'audio', 'edit', choixId]);
+     console.log('Editing item', choixId);
+   }
 
-  ngOnDestroy () {
-    if(this.choixSub){
-      this.choixSub.unsubscribe();
-    }
-  }
-
-  onEdit(choixId: string, slidingItem: IonItemSliding) {
+   onDelete(choixId: string, slidingItem: IonItemSliding){
     slidingItem.close();
-    this.router.navigate(['/', 'dimmo-conseil', 'tabs', 'audio', 'edit', choixId]);
-    console.log('Editing item', choixId);
-  }
+    this.choixService.deleteChoix(choixId).subscribe(() =>{
+      location.reload();
+    });
+   }
 
 }

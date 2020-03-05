@@ -3,35 +3,98 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>DIMMO CONSEIL</ion-title>
+    <ion-title>AUDIO WAY</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-segment (ionChange)="onFilterUpdate($event)">
-    <ion-segment-button value="apropos" checked>A PROPOS</ion-segment-button>
+    <ion-segment-button value="apropos" checked>À PROPOS</ion-segment-button>
     <ion-segment-button value="contact">CONTACT</ion-segment-button>
   </ion-segment>
 
     <div *ngIf="apropos">
-        <ion-card>
-            <!-- <img src="./madison.jpg" /> -->
+      <ion-slides>
+        <ion-slide>
+          <!-- <div><ion-badge color="primary">1/3</ion-badge></div> -->
+            <ion-card>
+                <!-- <img src="./assets/icon/question-mark.jpg" /> -->
+                <ion-card-header>
+                  <ion-card-subtitle><ion-badge color="primary">1 / 3</ion-badge></ion-card-subtitle>
+                  <ion-card-title color="primary">A quoi ça sert ... ?</ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="ion-text-justify">
+                  AudioWay est une application dédiée aux métiers liés
+                  au secteur de l’audioprothèse. Elle a pour but
+                  de faciliter la recherche d’un poste dans une
+                  localité spécifique. Il suffit d’enregistrer votre
+                  périmètre de mobilité ainsi que le poste
+                  désiré. C’est un outil mis à votre disposition
+                  pour faciliter votre démarche et vous
+                  proposer une opportunité qui correspond à
+                  vos attentes.
+                </ion-card-content>
+              </ion-card>
+        </ion-slide>
+
+        <ion-slide>
+            <!-- <div><ion-badge color="primary">2 / 3</ion-badge></div> -->
+            <ion-card>
+                <!-- <img src="./assets/icon/training-2.jpg" /> -->
+                <ion-card-header>
+                  <ion-card-subtitle><ion-badge color="primary">2 / 3</ion-badge></ion-card-subtitle>
+                  <ion-card-title color="primary">Qui est à l'origine de AudioWay ?</ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="ion-text-justify">
+                    Dimmo Conseil est un cabinet de
+                    recrutement spécialisé dans le monde du
+                    paramédical et tout particulièrement dans
+                    celui de l’audioprothèse, qui est à l’initiative
+                    de cette application. C’est un moyen de
+                    faciliter la rencontre entre l’offre et de la
+                    demande sur le marché de l’audioprothèse.
+                </ion-card-content>
+              </ion-card>
+        </ion-slide>
+
+        <ion-slide>
+          <!-- <div><ion-badge color="primary">3 / 3</ion-badge></div>           -->
+            <ion-card>
+                <!-- <img src="./assets/icon/training.jpg" /> -->
+                <ion-card-header>
+                  <ion-card-subtitle><ion-badge color="primary">3 / 3</ion-badge></ion-card-subtitle>
+                  <ion-card-title color="primary">Nos clauses de confidentialité</ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="ion-text-justify">
+                    <p><b>Nous garantissons</b>  les confidentialités de
+                      l’anonymat de nos candidats. Nous nous
+                      engageons à ne pas transmettre vos
+                      coordonnées à nos clients sans votre accord
+                      
+                      préalable.</p>
+                </ion-card-content>
+              </ion-card>
+        </ion-slide>
+      </ion-slides>
+        <!-- <ion-card>
               <ion-card-header>
                 <ion-card-subtitle>Notre engagement</ion-card-subtitle>
                 <ion-card-title style="color: dodgerblue;">DIMMO-CONSEIL, BORDEAUX</ion-card-title>
               </ion-card-header>
               <ion-card-content>
-                Nous sommes un cabinet de conseil indépendant basé à Bordeaux. Nous sommes spécialisés dans le recrutement par approche directe (chasseur de tête) en Midde top management. Nous accompagnons également des entreprises dans le développement de leurs politiques RH, gestion des Talents, Coaching en management et développement personnel.
+                Nous sommes un cabinet de conseil indépendant basé à Bordeaux. 
+                Nous sommes spécialisés dans le recrutement par approche directe (chasseur de tête) en Midde top management.
+                Nous accompagnons également des entreprises dans le développement de leurs politiques RH, gestion des Talents,
+                Coaching en management et développement personnel.
               </ion-card-content>
-         </ion-card><br>
-         <ion-text color="tertiary">Nous avons des opportunités à vous proposer dans toute la France</ion-text><br><br><br>
-         <ion-text color="success">Vous êtes à l'écoute de marché pour quelle localité? </ion-text><br><br>
+         </ion-card><br> -->
+         <ion-text color="primary">Nous avons des opportunités à vous proposer dans toute la France</ion-text><br><br><br>
+         <ion-text color="primary">Vous êtes à l'écoute du marché pour quelle localité ? </ion-text><br><br>
          <form action="" method="post">
             <div class="form-group">
                 <label for="region" style=" font-weight: bold; color: dodgerblue;">REGION &nbsp;</label>
                 <select (change)="onChange($event.target.value)" name="region" id="region" ngModel [ngModelOptions]="{standalone: true}">
-                    <option selected>Selectionnez Region</option>
-                    <option value="Auvergne-Rhone-Alpes">Auvergne-Rhône-Alpes</option>
+                    <option selected value="Auvergne-Rhone-Alpes">Auvergne-Rhône-Alpes</option>
                     <option value="Bourgogne-Franche-Comte">Bourgogne-Franche-Comté</option>
                     <option value="Bretagne">Bretagne</option>
                     <option value="Centre-Val de Loire">Centre-Val de Loire</option>
@@ -82,41 +145,57 @@
           <ion-thumbnail slot="start">
             <img src="./assets/icon/slide-1.png">
           </ion-thumbnail>
-          <ion-label color="tertiary">
+          <ion-label color="primary">
             <h2 style="font-weight: bold; color: #3880ff;">Merci de nous contacter</h2>
-            <p>TEL: 00 000 00 00 00</p>
-            <p>email: contact@dimmo-conseil.com</p><br>
+            <p>TEL: +33(0) 524 72 26 06</p>
+            <p><span style="font-weight: bold;">email</span> contact@audio-way.com</p>
+            <!-- <p>17 Allée de Boutault – 33110 Le Bouscat</p> -->
+            <br>
             <h3 style="font-weight: bold;">OUVERTURE</h3>
-            <p>Lundi au Vendredi</p>
-            <p>09h00 - 12h00 | 13h30 - 17h00</p>
+            <p>Lundi au Jeudi</p>
+            <p>09h00 - 12h30 | 14h00 - 18h00</p><br>
+            <p>Vendredi</p>
+            <p>09h00 - 12h30 | 14h00 - 17h30</p>
           </ion-label>
         </ion-item><hr>
-          <h2 style="font-weight: bold; color: #a423fa;">NOUS ECRIRE</h2>
-        <form [formGroup]="formGroup">
+          <h2 style="font-weight: bold; color: #0616f8;">NOUS ECRIRE</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <ion-list lines="full" >
               <ion-item>
                 <ion-label position="floating">Votre Nom <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input required type="text" formControlName="nom" name="nom"></ion-input>
+                <span
+                *ngIf="!signupForm.get('nom').valid && signupForm.get('nom').touched"
+                class="danger">Merci de renseigner votre Nom !</span>
               </ion-item>
     
               <ion-item>
                 <ion-label position="floating">Votre Prénom <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input required type="text" formControlName="prenom" name="prenom"></ion-input>
+                <span
+                  *ngIf="!signupForm.get('prenom').valid && signupForm.get('prenom').touched"
+                  class="danger">Merci de renseigner votre prenom !</span>
               </ion-item>
               
               <ion-item>
-                <ion-label position="floating">Sujet</ion-label>
+                <ion-label position="floating">Sujet<ion-text color="danger">*</ion-text></ion-label>
                 <ion-input type="text" formControlName="sujet" name="sujet"></ion-input>
+                  <span
+                  *ngIf="!signupForm.get('sujet').valid && signupForm.get('sujet').touched"
+                  class="danger">Merci de renseigner le sujet du message !</span>
               </ion-item>
     
               <ion-item>
-                <ion-label position="stacked">Nous Ecrire</ion-label>
+                <ion-label position="stacked">Nous Ecrire<ion-text color="danger">*</ion-text></ion-label>
                 <ion-textarea formControlName="nousecrire" name="nousecrire"></ion-textarea>
+                <span
+                  *ngIf="!signupForm.get('nousecrire').valid && signupForm.get('nousecrire').touched"
+                  class="danger">Votre message doit avoir au moins 10 caractères !</span>
               </ion-item>
             </ion-list>
     
             <div class="ion-padding">
-              <ion-button expand="block" type="submit" (click)="onSubmit()" class="ion-no-margin">Envoyer</ion-button>
+              <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="!signupForm.valid">Envoyer</ion-button>
             </div>
           </form>
     

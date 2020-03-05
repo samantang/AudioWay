@@ -10,6 +10,7 @@ import { MatStepperModule, MatButtonModule, MatFormFieldModule, MatInputModule, 
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthService } from 'src/app/auth/auth.service';
 
 const routes: Routes = [
   {
@@ -36,7 +37,7 @@ const routes: Routes = [
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true }
+      useValue: { showError: true },
     }
   ],
   declarations: [DimmoComponent]

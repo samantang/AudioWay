@@ -1,10 +1,14 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>{{ isLogin ? 'Login' : 'Signup' }}</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/dimmo-conseil" ></ion-back-button>
+      </ion-buttons>
+      <ion-title>Inscription</ion-title>
     </ion-toolbar>
   </ion-header>
   
   <ion-content padding>
+    <!-- <ion-button (click)="openGmail()">Open Gmail</ion-button> -->
     <form #f="ngForm" (ngSubmit)="onSubmit(f)">
       <ion-grid>
         <ion-row>
@@ -25,12 +29,12 @@
                 *ngIf="!emailCtrl.valid && emailCtrl.touched"
                 lines="none"
               >
-                <ion-label>
+                <ion-label color="danger">
                   Doit être une adresse email valide
                 </ion-label>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Password</ion-label>
+                <ion-label position="floating">Mot de passe</ion-label>
                 <ion-input
                   type="password"
                   ngModel
@@ -44,8 +48,27 @@
                 *ngIf="!passwordCtrl.valid && passwordCtrl.touched"
                 lines="none"
               >
-                <ion-label>
+                <ion-label color="danger">
                   Doit avoir au moins 6 caractères
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Confirmation Mot de passe</ion-label>
+                <ion-input
+                  type="password"
+                  ngModel
+                  name="passwordAgain"
+                  required
+                  minlength="6"
+                  #passwordAgain="ngModel"
+                ></ion-input>
+              </ion-item>
+              <ion-item
+                *ngIf="passwordCtrl.value !== passwordAgain.value"
+                lines="none"
+              >
+                <ion-label color="danger">
+                  Les deux mots de passe doivent être identiques
                 </ion-label>
               </ion-item>
             </ion-list>
@@ -53,22 +76,22 @@
         </ion-row>
         <ion-row>
           <ion-col size-sm="6" offset-sm="3">
-            <ion-button
+            <!-- <ion-button
               type="button"
               color="primary"
               fill="clear"
               expand="block"
               (click)="onSwitchAuthMode()"
             >
-              Changer pour {{ isLogin ? 'Signup' : 'Login' }}
-            </ion-button>
+              Changer pour {{ isLogin ? 'Inscription' : 'Connexion' }}
+            </ion-button><br><br><br> -->
             <ion-button
               type="submit"
               color="primary"
               expand="block"
               [disabled]="!f.valid"
             >
-              {{ isLogin ? 'Login' : 'Signup' }}
+              {{ isLogin ? 'Connexion' : 'Inscription' }}
             </ion-button>
           </ion-col>
         </ion-row>

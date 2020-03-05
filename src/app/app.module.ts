@@ -17,6 +17,7 @@ import { InscritDetailsModalComponent } from './dimmo-conseil/inscrits/inscrit-d
 import { NewChoixComponent } from './dimmo-conseil/audio/new-choix/new-choix.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [AppComponent, InscritDetailsModalComponent],
@@ -38,6 +39,7 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) ],
   providers: [
     NewChoixComponent,
+    AuthService,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

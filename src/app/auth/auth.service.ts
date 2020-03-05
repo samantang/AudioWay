@@ -21,7 +21,7 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  private _user = new BehaviorSubject<User>(null);
+   _user = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
 
   get userIsAuthenticated() {
@@ -129,6 +129,7 @@ export class AuthService {
     localStorage.setItem('clefUser', '');
     localStorage.setItem('clefAdmin', '');
     localStorage.clear();
+    location.reload();
   }
 
   ngOnDestroy() {
@@ -179,6 +180,7 @@ export class AuthService {
       email: email
     });
     Plugins.Storage.set({ key: 'authData', value: data });
+    // location.reload();
   }
 
   getUsers(){

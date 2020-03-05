@@ -17,6 +17,7 @@ export class Choix {
       public enseignesNon: string [],
       public joursContact: string [],
       public momentsContact: string [],
-      public dateCreation: Date
+      public dateCreation: Date,
+      public telephone: number
     ) {}
   }

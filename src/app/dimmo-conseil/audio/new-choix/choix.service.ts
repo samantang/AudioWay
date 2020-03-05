@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
+// import { Email } from '@teamhive/capacitor-email';
 
 
 import { Choix } from './choix.model';
 import { Message } from './message.model';
+import { Opportunite } from '../new-opportunite/Opportunite.model';
 
 interface ChoixData {
    id: string;
@@ -25,7 +27,26 @@ interface ChoixData {
     enseignesNon: string [];
     joursContact: string [];
     momentsContact: string [];
-    dateCreation: Date;
+    dateCreation: Date,
+    telephone: number;
+}
+interface MessagesData {
+  id: string;
+  nom: string;
+  prenom: string;
+  sujet: string;
+  nousEcrire: string;
+  date: Date;
+}
+
+interface OpportuniteData {
+  id: string,
+  userId: string,
+  name: string,
+  region: string,
+  nbOpportunites: number,
+  detailsPoste: string,
+  dateCreation: Date
 }
 
 
@@ -41,8 +62,14 @@ interface ChoixData {
 
     private _messages = new BehaviorSubject<Message[]>([]);
 
-    get Messages (){
+    get getMessages (){
       return this._messages.asObservable();
+    }
+
+    private _opportunite = new BehaviorSubject<Opportunite[]>([]);
+
+    get Opportunite() {
+        return this._opportunite.asObservable();
     }
 
     constructor(private http: HttpClient) {}
@@ -76,7 +103,8 @@ interface ChoixData {
                     resData[key].enseignesNon,
                     resData[key].joursContact,
                     resData[key].momentsContact,
-                    new Date(resData[key].dateCreation)
+                    new Date(resData[key].dateCreation),
+                    null
                   )
                 );
               }
@@ -89,9 +117,78 @@ interface ChoixData {
             console.log(choix);
           })
         );
+    };
+
+    fetchOpportunites() {
+      return this.http
+        .get<{ [key: string]: OpportuniteData }>(
+          'https://dimmo-51817.firebaseio.com/opportunites.json'
+        )
+        .pipe(
+          map(resData => {
+            const opportunite = [];
+            for (const key in resData) {
+              if (resData.hasOwnProperty(key)) {
+                opportunite.push(
+                  new Opportunite(
+                    key,
+                    resData[key].userId,
+                    resData[key].name,
+                    resData[key].region,
+                    resData[key].nbOpportunites,
+                    resData[key].detailsPoste,
+                    new Date(resData[key].dateCreation)
+                  )
+                );
+              }
+            }
+            return opportunite;
+            // return [];
+          }),
+          tap(Opportunite => {
+            this._opportunite.next(Opportunite);
+            console.log(Opportunite);
+          })
+        );
+    }
+
+    fetchMessages() {
+      console.log('dans fetcheMessages ..... ');
+      return this.http
+        .get<{ [key: string]: MessagesData }>(
+          'https://dimmo-51817.firebaseio.com/messages.json'
+        )
+        .pipe(
+          map(messagesData => {
+            const messages = [];
+            for (const key in messagesData) {
+              if (messagesData.hasOwnProperty(key)) {
+                console.log('le sujet de message:  '+  messagesData[key].sujet);
+                messages.push(
+                  new Message(
+                    key,
+                    messagesData[key].nom,
+                    messagesData[key].prenom,
+                    messagesData[key].sujet,
+                    messagesData[key].nousEcrire,
+                    new Date(messagesData[key].date)
+                  )
+                );
+              }
+            }
+            // console.log('mess ...' +this.Messages)
+            return messages;
+            // return [];
+          }),
+          tap(messages => {
+            this._messages.next(messages);
+            console.log('messages' +messages);
+          })
+        );
     }
 
     addChoix(choix: Choix) {
+      console.log(choix.region + ', '+choix.departement + ' ..........................');
       let generatedId: string;
       const newChoix = new Choix(
       Math.random().toString(),
@@ -111,7 +208,8 @@ interface ChoixData {
       choix.enseignesNon,
       choix.joursContact,
       choix.momentsContact,
-      choix.dateCreation);
+      choix.dateCreation,
+      choix.telephone);
 
       return this.http
       .post<{ name: string }>(
@@ -133,6 +231,39 @@ interface ChoixData {
         })
       );
       }
+
+      addOpportunite(opportunite: Opportunite) {
+        let generatedId: string;
+        const newOpportunite = new Opportunite(
+        Math.random().toString(),
+        opportunite.userId,
+        opportunite.name,
+        opportunite.region,
+        opportunite.nbOpportunites,
+        opportunite.detailsPoste,
+        opportunite.dateCreation);
+  
+        return this.http
+        .post<{ name: string }>(
+          'https://dimmo-51817.firebaseio.com/opportunites.json',
+          {
+            ...newOpportunite,
+            id: null
+          }
+        )
+        .pipe(
+          switchMap(resData => {
+            generatedId = resData.name;
+            return this._opportunite;
+          }),
+          take(1),
+          tap(opportunites => {
+            newOpportunite.id = generatedId;
+            this._opportunite.next(opportunites.concat(newOpportunite));
+          })
+        );
+        }
+
       getChoix(id: string) {
         return this.http
           .get<ChoixData>(
@@ -159,6 +290,7 @@ interface ChoixData {
                 placeData.joursContact,
                 placeData.momentsContact,
                 new Date(placeData.dateCreation),
+                placeData.telephone
               );
             })
           );
@@ -196,7 +328,8 @@ interface ChoixData {
               choixU.enseignesNon,
               choixU.joursContact,
               choixU.momentsContact,
-              choixU.dateCreation
+              choixU.dateCreation,
+              choixU.telephone
             );
             return this.http.put(
               `https://dimmo-51817.firebaseio.com/audios/${choixU.id}.json`,
@@ -237,5 +370,9 @@ interface ChoixData {
             this._messages.next(messages.concat(newMessage));
           })
         );
+        }
+
+        deleteChoix(id: string){
+          return this.http.delete(`https://dimmo-51817.firebaseio.com/audios/${id}.json`)
         }
   }

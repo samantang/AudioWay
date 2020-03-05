@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ToastController, ActionSheetController} from '@ionic/angular';
+import { ToastController, ActionSheetController, AlertController} from '@ionic/angular';
 
 import { Choix } from '../new-choix/choix.model';
 import { Router } from '@angular/router';
+import { ChoixService } from '../new-choix/choix.service';
 
 @Component({
   selector: 'app-choix-item',
@@ -28,7 +29,9 @@ export class ChoixItemComponent implements OnInit {
 
   constructor(public toastController: ToastController,
               public actionSheetController: ActionSheetController,
-              public router: Router) {}
+              public router: Router,
+              private choixService: ChoixService,
+              public alertController: AlertController) {}
 
   ngOnInit() {
    if(this.choix.assistantAudioCdd === true ) {
@@ -67,32 +70,40 @@ export class ChoixItemComponent implements OnInit {
 
   async presentActionSheetDetailChoix() {
     const actionSheet = await this.actionSheetController.create({
-      header: ' Détails de Votre choix',
+      header: ' DÉTAILS DE CE CRITERE DE CHOIX',
       cssClass: 'my-actionsheet',
       buttons: [{
-        text: this.choix.localite +' '+ this.choix.region ,
+        text: this.choix.localite +'  => '+ this.choix.region ,
         // role: 'destructive',
         icon: 'business',
         handler: () => {
           console.log('Localite');
         }
       }, {
-        text: this.lePosteAudio,
+        text: this.lePoste,
         icon: 'done-all',
         handler: () => {
-          console.log('audio');
+          console.log('lePoste');
         }
-      }, {
-        text: this.lePosteAssistant,
-        icon: 'done-all',
+      // }, {
+      //   text: this.choix.region,
+      //   icon: 'done-all',
+      //   handler: () => {
+      //     console.log('Assistant');
+      //   }
+      }, 
+      // {
+      //   text: ' '+this.choix.telephone,
+      //   icon: 'call',
+      //   handler: () => {
+      //     console.log('Res Region');
+      //   }
+      // }, 
+      {
+        text: 'PLUS DE DÉTAILS SUR LE CRITERE DE CHOIX',
+        icon: 'more',
         handler: () => {
-          console.log('Assistant');
-        }
-      }, {
-        text: this.lePosteResRegion,
-        icon: 'done-all',
-        handler: () => {
-          console.log('Res Region');
+          this.onDetailsChoix();
         }
       },
       {
@@ -103,7 +114,7 @@ export class ChoixItemComponent implements OnInit {
         }
       },
       {
-        text: 'Supprimer ce choix',
+        text: 'SUPPRIMER CE CHOIX',
         icon: 'trash',
         role: 'trash',
         handler: () => {
@@ -113,9 +124,41 @@ export class ChoixItemComponent implements OnInit {
     });
     await actionSheet.present();
   }
-  onDeleteChoix(){}
+  
   onEditChoix(){
     this.router.navigate(['/', 'dimmo-conseil', 'tabs', 'audio', 'edit', this.choix.id]);
+  }
+  onDetailsChoix(){
+    this.router.navigate(['/', 'dimmo-conseil', 'tabs', 'audio', 'details', this.choix.id]);
+  }
+  onDeleteChoix(){
+    this.presentAlertConfirm();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Suppression du choix',
+      message: 'Voulez-vous Vraiment <strong>supprimer</strong> ce critère de choix ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Oui supprimer',
+          handler: () => {
+            this.choixService.deleteChoix(this.choix.id).subscribe(() =>{
+            location.reload();
+          });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

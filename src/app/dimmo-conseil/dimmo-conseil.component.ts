@@ -10,6 +10,13 @@ export class DimmoConseilComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
+
+  // ionViewDidEnter (){
+  //   console.log("reload this page ....")
+  //  location.reload()
+  // }
+  
 
 }

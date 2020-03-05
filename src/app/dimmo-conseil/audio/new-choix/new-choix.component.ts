@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, NgForm , FormBuilder} from '@angular/forms';
 import { LoadingController, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Choix } from './choix.model';
 import { ChoixService } from './choix.service';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
@@ -31,8 +31,11 @@ export class NewChoixComponent implements OnInit {
 @ViewChild('f', {static: false}) signUpForm: NgForm;
 
   regionChoisie = 'no';
+  momentsContact = ''
+  regionDejaChoisie = false;
+  afficherRegionDejaChoisie = '';
   form: FormGroup;
-  choix: Choix = new Choix('','',false, false, false, false, false, false, false, false, false, '', '', '', null, null, null, null );
+  choix: Choix = new Choix('','',false, false, false, false, false, false, false, false, false, '', '', '', null, null, null, null, null );
       public resRegionCdd: boolean;
       public resRegionCdi: boolean;
       public audioCdd: boolean;
@@ -44,22 +47,29 @@ export class NewChoixComponent implements OnInit {
       public technicienCdi: boolean;
       public enseignesNon: [];
       public enseignesOk: [];
+      public joursContact: '';
 
   constructor(private choixService: ChoixService,
               private loadingCtrl: LoadingController,
               private router: Router,
               public navCtrl: NavController,
               private _formBuilder: FormBuilder,
-              private alertCtrl: AlertController
+              private alertCtrl: AlertController,
+              private route: ActivatedRoute
               ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe( param => {
+      if(param.has('regionChoisie')){
+        console.log('il ya une region choisie ...')
+        this.regionChoisie = param.get('regionChoisie');
+        this.regionDejaChoisie = true;
+        this.afficherRegionDejaChoisie = param.get('regionChoisie');
+      }
+    });
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: []
     });
-    // this.secondFormGroup = this._formBuilder.group({
-    //   secondCtrl: [] enseignesNon
-    // });
     this.thirdFormGroup = new FormGroup({
       enseignesNon: new FormControl(null, {
         updateOn: 'blur'
@@ -78,12 +88,11 @@ export class NewChoixComponent implements OnInit {
     });
     this.secondFormGroup = new FormGroup({
       localite: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
+        updateOn: 'blur'
+        // validators: [Validators.required]
       }),
       region: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
+        updateOn: 'blur'
       }),
       departement: new FormControl(null, {
         updateOn: 'blur',
@@ -123,8 +132,12 @@ export class NewChoixComponent implements OnInit {
   public ontechnicienCdi() {
     console.log('technicienCdi: ' + this.technicienCdi);
   }
+  onMomentContact(moment){
+    this.momentsContact = moment;
+  }
 
   onSubmitt() {
+    console.log('la region: '+ this.regionChoisie)
      // si il n'a pas choisit de poste
      if( !this.resRegionCdd && !this.resRegionCdi && !this.audioCdd && !this.audioCdi
       && !this.audiodVolant && !this.assistantAudioCdd && !this.assistantAudioCdi
@@ -136,7 +149,24 @@ export class NewChoixComponent implements OnInit {
      if( this.regionChoisie === 'no') {
       this.presentAlertLieuDeTravailConfirm();
       return;
-     }
+     };
+     console.log('les jours de contact: ' + this.quatriemeFormGroup.value.joursContact)
+    //  si les jours ne sont pas renseignés
+    if(this.quatriemeFormGroup.value.joursContact === null){
+      this.presentAlertJoursDeContactConfirm();
+      return;
+    };
+    //  si les horaires ne sont pas renseignés
+    if(this.quatriemeFormGroup.value.momentsContact === null){
+      this.presentAlertHorrairesDeContactConfirm();
+      return;
+    };
+    //  le téléphone
+    if(this.quatriemeFormGroup.value.telephone === null){
+      this.presentAlertNumeroDeContactConfirm();
+      return;
+    };
+
      this.choix = new Choix(
     'id',
     localStorage.getItem('userId'),
@@ -155,7 +185,8 @@ export class NewChoixComponent implements OnInit {
     this.thirdFormGroup.value.enseignesNon,
     this.quatriemeFormGroup.value.joursContact,
     this.quatriemeFormGroup.value.momentsContact,
-    null);
+    null,
+    this.quatriemeFormGroup.value.telephone);
 
 
      this.storeChoixData(this.resRegionCdd, this.resRegionCdi, this.audioCdd, this.audioCdi,
@@ -175,27 +206,15 @@ export class NewChoixComponent implements OnInit {
             loadingEl.present();
             this.choixService.addChoix(this.choix).subscribe(() => {
               loadingEl.dismiss();
-              this.router.navigate(['/dimmo-conseil/tabs/dimmo']);
+              location.reload();
+              this.router.navigateByUrl('/dimmo-conseil/tabs/audio/mes-choix');
             }
               );
           });
     } else {
 
-      console.log('personne est connecté actuellement ...');
       this.presentAlerInscriptiontPrompt();
     }
-    // this.presentAlerInscriptiontPrompt();
-
-    // this.loadingCtrl
-    //   .create({
-    //     message: 'Personnalisation de vos choix ...'})
-    //   .then(loadingEl => {
-    //     loadingEl.present();
-    //     this.choixService.addChoix(this.choix).subscribe(() => {
-    //       loadingEl.dismiss();
-    //     }
-    //       );
-    //   });
   }
   private storeChoixData(
     resRegionCdd: boolean,
@@ -239,14 +258,18 @@ export class NewChoixComponent implements OnInit {
     console.log(e);
   }
   onFinirInscription (localId: string, tel: number) {
-    this.getChoix(localId).subscribe(() => {});
+    this.getChoix(localId).subscribe(ch => {
+      console.log('les jours de contact: ' +this.choix.joursContact);
+    });
     this.loadingCtrl
       .create({
-        message: 'Personnalisation de vos choix ...'})
+        message: 'Personnalisation de vos choix '})
       .then(loadingEl => {
         loadingEl.present();
         this.choixService.addChoix(this.choix).subscribe(() => {
           loadingEl.dismiss();
+          location.reload();
+          this.router.navigateByUrl('/dimmo-conseil/tabs/audio/mes-choix');
         }
           );
       });
@@ -272,7 +295,8 @@ export class NewChoixComponent implements OnInit {
           localite: string,
           enseignesNon: [],
           joursContact: string [],
-          momentsContact: string[]
+          momentsContact: string[],
+          telephone: number
         };
         // const expirationTime = new Date(parsedData.tokenExpirationDate);
         // if (expirationTime <= new Date()) {
@@ -296,14 +320,15 @@ export class NewChoixComponent implements OnInit {
           parsedData.enseignesNon,
           parsedData.joursContact,
           parsedData.momentsContact,
-          new Date()
+          new Date(),
+          parsedData.telephone
         );
         this.choix = choix;
         return choix;
       }),
       tap(choix => {
         if (choix) {
-          // this.choix = choix;
+          this.choix = choix;
           // this._user.next(user);
           // this.autoLogout(user.tokenDuration);
         }
@@ -344,6 +369,77 @@ export class NewChoixComponent implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Le LIEU DE TRAVAIL SOUHAITE!',
       message: '<strong>Merci de choisir une région</strong>',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertJoursDeContactConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'VOUS CONTACTER!',
+      message: '<strong>Merci de choisir les jours de préférence de contact</strong>',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  };
+
+  async presentAlertHorrairesDeContactConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'MOMENT DE CONTACT!',
+      message: '<strong>Merci de choisir au moins un créneau horaire</strong>',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  };
+  async presentAlertNumeroDeContactConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'Le NUMERO DE CONTACT!',
+      message: '<strong>Merci de renseigner le numéro auquel nous pouvons vous contacter</strong>',
       buttons: [
         {
           text: 'Annuler',

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Plugins } from '@capacitor/core';
+import { Email } from '@teamhive/capacitor-email';
 
 import { AuthService, AuthResponseData } from './auth.service';
 import { NewChoixComponent } from '../dimmo-conseil/audio/new-choix/new-choix.component';
@@ -15,9 +16,10 @@ import { NewChoixComponent } from '../dimmo-conseil/audio/new-choix/new-choix.co
 })
 export class AuthPage implements OnInit {
   isLoading = false;
-  isLogin = true;
-  inscription = false;
+  isLogin = false;
+  inscription = true;
   tel: number;
+  email: Email;
 
   constructor(
     private authService: AuthService,
@@ -27,10 +29,15 @@ export class AuthPage implements OnInit {
     private newChoixComponent: NewChoixComponent
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.email = new Email();
+    if(localStorage.getItem('clefUser') === 'user') {
+      this.router.navigateByUrl('/dimmo-conseil/tabs/dimmo');
+    }
+  }
 
   authenticate(email: string, password: string) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.loadingCtrl
       .create({ keyboardClose: true, message: 'connexion...' })
       .then(loadingEl => {
@@ -40,27 +47,28 @@ export class AuthPage implements OnInit {
           authObs = this.authService.login(email, password);
         } else {
           authObs = this.authService.signup(email, password);
-          this.inscription = true;
+          // this.inscription = true;
         }
         authObs.subscribe(
           resData => {
             // si c'est une inscription, alors il faut récupérer l'id et aller finir la page newChoix
             if( this.inscription){
+              // console.log('cest une inscription +++++++++++++++++++++++++++++++++++++++');
               this.newChoixComponent.onFinirInscription(resData.localId, this.tel);
             }
             localStorage.setItem('userId', resData.localId);
             
             // si c'est un utilisateur admin, alors on rajoute le role admin au localStorage
-            if(resData.email === 'saliou@bah.com'){
+            if(resData.email === 'salioubahdiallo@gmail.com' || resData.email === 'aliou.bah@dimmo-conseil.com || resData.email === info@dimmo-conseil.com'){
               localStorage.setItem('clefAdmin', 'admin');
               localStorage.setItem('clefUser', 'user');
             } else {
               localStorage.setItem('clefUser', 'user');
             }
-            console.log(resData);
-            this.isLoading = false;
+            // console.log(resData);
+            // this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/dimmo-conseil');
+            // this.router.navigate(['/dimmo-conseil']);
           },
           errRes => {
             loadingEl.dismiss();
@@ -69,7 +77,7 @@ export class AuthPage implements OnInit {
             if (code === 'EMAIL_EXISTS') {
               message = 'Cette adresse email existe  dejà!';
             } else if (code === 'EMAIL_NOT_FOUND') {
-              message = 'Nous navons pas trouvé ce email.';
+              message = 'Nous n\'avons pas trouvé ce email.';
             } else if (code === 'INVALID_PASSWORD') {
               message = 'Le mot de passe est incorrect.';
             }
@@ -103,4 +111,5 @@ export class AuthPage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
+
 }

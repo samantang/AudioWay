@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mes choix</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/dimmo-conseil/tabs/audio/new">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item-sliding *ngFor="let choix of mesChoix" #slidingItem>
+    <app-mes-choix-item [choix]="choix"></app-mes-choix-item>
+    <ion-item-options side="end">
+      <ion-item-option
+        color="tertiary"
+        (click)="onEdit(choix.id, slidingItem)"
+      >
+        <ion-icon name="create" slot="icon-only"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+    <ion-item-options side="start">
+      <ion-item-option
+        color="danger"
+        (click)="onDelete(choix.id, slidingItem)"
+      >
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-content>

@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "dimmo-conseil1",
+  "appId": "com.audioway.dimmo",
+  "appName": "audioWay",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

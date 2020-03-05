@@ -1,0 +1,27 @@
+<ion-header translucent>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <ion-list *ngFor="let message of messages">
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="./assets/icon/avatar.png">
+      </ion-avatar>
+      <ion-label>
+        <h2> <span style="font-weight: bold; color: darkmagenta;"> SUJET:</span> &nbsp; {{message.sujet}}</h2>
+        <h3>{{message.nom}}  &nbsp; {{message.prenom}}</h3>
+        <p>{{message.nousEcrire}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<!-- <p>les messages</p>
+<ion-item *ngFor="let message of messages">
+    le sujet du message {{message.sujet}}
+</ion-item> -->

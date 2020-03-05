@@ -3,74 +3,95 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>
-          DIMMO CONSEIL
+          MENU
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
+
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content color="success">
+          Actualisation de vos informations
+        </ion-refresher-content>
+      </ion-refresher>
+
       <ion-list *ngIf="!userRoleUser">
           <ion-menu-toggle>
-              <ion-item  lines="none" routerLink="/auth">
-                <ion-icon name="business" slot="start" color="danger"></ion-icon>
-                <ion-label color="danger">Merci de vous identifier</ion-label>
+              <ion-item  lines="none" routerLink="/auth-connexion">
+                <ion-icon name="person" slot="start" color="tertiary"></ion-icon>
+                <ion-label color="tertiary">Merci de vous identifier</ion-label>
               </ion-item>
             </ion-menu-toggle>
       </ion-list>
+      <!-- <ion-list *ngIf="!userRoleUser">
+        <ion-menu-toggle (click)="onRafraichir()">
+            <ion-item  lines="none" >
+              <ion-icon name="refresh-circle" slot="start" color="danger"></ion-icon>
+              <ion-label color="danger" >ou rafraîchir cette page</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+    </ion-list> -->
       
       <ion-list *ngIf="userRoleUser">
         <ion-menu-toggle>
           <ion-item  lines="none" routerLink="/dimmo-conseil/tabs/dimmo">
-            <ion-icon name="business" slot="start" color="primary"></ion-icon>
+            <ion-icon name="arrow-dropright-circle" slot="start" color="primary"></ion-icon>
             <ion-label>À PROPOS</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-            <ion-item   lines="none" routerLink="/dimmo-conseil/tabs/audio">
+            <ion-item   lines="none" routerLink="/dimmo-conseil/tabs/audio/mes-choix">
               <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
-              <ion-label>VOS CRITERES</ion-label>
+              <ion-label>VOS CRIT&Egrave;RES DE CHOIX</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
               <ion-item  lines="none" routerLink="/dimmo-conseil/tabs/audio/comment-ca-marche">
-                <ion-icon name="business" slot="start" color="primary"></ion-icon>
-                <ion-label>À PROPOS DE L'APPLI</ion-label>
+                <ion-icon name="help-circle" slot="start" color="primary"></ion-icon>
+                <ion-label>COMMENT ÇA MARCHE</ion-label>
               </ion-item>
             </ion-menu-toggle>
-            <ion-menu-toggle>
+            <!-- <ion-menu-toggle>
                 <ion-item  lines="none" routerLink="/dimmo-conseil/tabs/audio/ensavoir-plus">
-                  <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
-                  <ion-label>COMMENT ÇA MARCHE</ion-label>
+                  <ion-icon name="help-circle" slot="start" color="primary"></ion-icon>
+                  <ion-label>A PROPOS DE L'APPLI</ion-label>
                 </ion-item>
-              </ion-menu-toggle>
-        <ion-menu-toggle>
+              </ion-menu-toggle> -->
+          <ion-menu-toggle>
             <ion-item  lines="none" routerLink="/dimmo-conseil/tabs/audio/nos-garanties">
-              <ion-icon name="business" slot="start" color="primary"></ion-icon>
-              <ion-label>NOUS GARANTISSONS</ion-label>
+              <ion-icon name="lock" slot="start" color="primary"></ion-icon>
+              <ion-label>NOTRE POLITIQUE</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
             <ion-item lines="none" (click)="onLogout()" >
               <ion-icon name="exit" slot="start" color="danger"></ion-icon>
-              <ion-label color="danger">Logout</ion-label>
+              <ion-label color="danger">D&Eacute;CONNEXION</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="userRoleAdmin">
             <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/inscrits">
-              <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+              <ion-icon name="people" slot="start"></ion-icon>
               <ion-label>TOUS LES INSCRITS</ion-label>
             </ion-item>
           </ion-menu-toggle><hr>
           <ion-menu-toggle *ngIf="userRoleAdmin">
-            <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/audio">
+            <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/audio/tous-les-choix">
               <ion-icon name="checkbox-outline" slot="start"></ion-icon>
               <ion-label>TOUS LES CHOIX</ion-label>
             </ion-item>
           </ion-menu-toggle><hr>
           <ion-menu-toggle *ngIf="userRoleAdmin">
-            <ion-item color="primary" lines="none" routerLink="/dimmo-conseil">
-              <ion-icon name="checkbox-outline" slot="start"></ion-icon>
-              <ion-label>Ajouter Opportunité</ion-label>
+            <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/audio/new-opportunite">
+              <ion-icon name="add-circle" slot="start"></ion-icon>
+              <ion-label>AJOUTEZ OPPORTUNIT&Eacute;</ion-label>
+            </ion-item>
+          </ion-menu-toggle><hr>
+          <ion-menu-toggle *ngIf="userRoleAdmin">
+            <ion-item color="primary" lines="none" routerLink="/dimmo-conseil/tabs/audio/messages">
+              <ion-icon name="chatboxes" slot="start"></ion-icon>
+              <ion-label>LES MESSAGES</ion-label>
             </ion-item>
           </ion-menu-toggle>
       </ion-list>

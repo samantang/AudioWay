@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ajouter Opportunité</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formGroup">
+    <div class="form-group">
+      <ion-item>
+        <ion-label for="region">REGION</ion-label>
+        <ion-select interface="popover" (ionChange)="onChange($event.target.value)"  name="region" id="region" formControlName="region" ngModel >
+          <!-- <ion-select-option selected>Selectionnez</ion-select-option> -->
+            <ion-select-option value="Auvergne-Rhone-Alpes">Auvergne-Rhône-Alpes</ion-select-option>
+            <ion-select-option value="Bourgogne-Franche-Comte">Bourgogne-Franche-Comté</ion-select-option>
+            <ion-select-option value="Bretagne">Bretagne</ion-select-option>
+            <ion-select-option value="Centre-Val de Loire">Centre-Val de Loire</ion-select-option>
+            <ion-select-option value="Corse">Corse</ion-select-option>
+            <ion-select-option value="Grand Est">Grand Est</ion-select-option>
+            <ion-select-option value="Hauts-de-France">Hauts-de-France</ion-select-option>
+            <ion-select-option value="Ile-de-France">Île-de-France</ion-select-option>
+            <ion-select-option value="Normandie">Normandie</ion-select-option>
+            <ion-select-option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</ion-select-option>
+            <ion-select-option value="Occitanie">Occitanie</ion-select-option>
+            <ion-select-option value="Pays de la Loire">Pays de la Loire</ion-select-option>
+            <ion-select-option value="Provence-Alpes-Cote dazur">Provence-Alpes-Côte d'Azur</ion-select-option>
+        </ion-select>
+       </ion-item>
+      </div>
+      
+      <div class="well">
+          <ion-row>
+              <ion-col size-sm="6" offset-sm="3">
+                <ion-item>
+                  <ion-label position="floating">le nombre d'Opportunités a rajouter pour la région <span style="color: brown;">1</span></ion-label>
+                  <ion-input type="text" value="1" formControlName="nbOpportunites" name="nbOpportunites" readonly></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-sm="6" offset-sm="3">
+                <ion-item>
+                  <ion-label position="floating">Préciser les détails du poste</ion-label>
+                  <ion-textarea type="text"  rows="3" formControlName="detailsPoste" name="detailsPoste" id="detailsPoste"></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            
+            <section class="full-width">
+              <ion-button type="submit" expand="block" color="secondary" (click)="onSubmit()">Ajouter Opportunité</ion-button>
+            </section>
+  
+      </div>
+  </form>
+</ion-content>
+

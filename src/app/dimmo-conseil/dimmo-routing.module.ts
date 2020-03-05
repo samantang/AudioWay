@@ -49,6 +49,16 @@ const routes: Routes = [
               './audio/new-choix/new-choix.module#NewChoixPageModule'
           },
           {
+            path: 'new-opportunite',
+            loadChildren:
+              './audio/new-opportunite/new-opportunite.module#NewOpportunitePageModule'
+          },
+          {
+            path: 'mes-choix',
+            loadChildren:
+              './audio/mes-choix/mes-choix.module#MesChoixPageModule'
+          },
+          {
             path: 'ensavoir-plus',
             loadChildren:
               './audio/ensavoir-plus/ensavoir-plus.module#EnSavoirPlusPageModule'
@@ -64,9 +74,29 @@ const routes: Routes = [
               './audio/nos-garanties/nos-garanties.module#NosGarantiesPageModule'
           },
           {
+            path: 'messages',
+            loadChildren:
+              './audio/messages/messages.module#MessagesPageModule'
+          },
+          {
+            path: 'tous-les-choix',
+            loadChildren:
+              './audio/tous-les-choix/tous-les-choix.module#TousLesChoixPageModule'
+          },
+          {
             path: 'edit/:choixId',
             loadChildren:
               './audio/edit-choix/edit-choix.module#EditChoixPageModule'
+          },
+          {
+            path: 'new/:regionChoisie',
+            loadChildren:
+              './audio/new-choix/new-choix.module#NewChoixPageModule'
+          },
+          {
+            path: 'details/:choixId',
+            loadChildren:
+              './audio/details-choix/details-choix.module#DetailsChoixPageModule'
           }
         ]
       },

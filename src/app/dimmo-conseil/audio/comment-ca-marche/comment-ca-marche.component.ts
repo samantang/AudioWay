@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-ca-marche',
@@ -13,8 +14,13 @@ export class CommentCaMarcheComponent implements OnInit {
     initialSlide: 0,
     speed: 400
   };
-  constructor() { }
+  constructor(private router: Router,
+    private navCtrl: NavController) { }
 
   ngOnInit() {}
+
+  onRetourAccueil(){
+    this.router.navigateByUrl('dimmo-conseil/tabs/dimmo');
+  }
 
 }

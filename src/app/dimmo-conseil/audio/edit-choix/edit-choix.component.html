@@ -6,6 +6,382 @@
       <ion-title>MODIFICATION des critères de recherche</ion-title>
     </ion-toolbar>
   </ion-header>
+<ion-content>
+  <form  [formGroup]="secondFormGroup" [formGroup]="thirdFormGroup" [formGroup]="quatriemeFormGroup" >
+  <mat-vertical-stepper  #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>LE POSTE SOUHAITE</ng-template>
+          <ion-row>
+            <ion-col size="12">
+                  <ion-text style="text-align: center;" color="secondary">Responsable Reginal</ion-text>
+                  <ion-row>
+                    <ion-col size="6">
+                        <ion-item >
+                            <ion-toggle slot="start" name="resRegionCdi" color="success" [(ngModel)]="resRegionCdi" (ionChange)="onresRegionCdi()" [ngModelOptions]="{standalone: true}">                     
+                            </ion-toggle>
+                            <ion-label>CDI</ion-label>
+                          </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-item>
+                            <ion-label>CDD</ion-label>
+                              <ion-toggle slot="start" name="resRegionCdd" color="success"  [(ngModel)]="resRegionCdd" (ionChange)="onresRegionCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                        </ion-item>
+                    </ion-col>
+                  </ion-row>
+                        <ion-text color="secondary">Audioprothésite</ion-text>
+                        <ion-row>
+                          <ion-col size="6">
+                              <ion-item>
+                                  <!-- <ion-label>CDI</ion-label> -->CDI
+                                  <ion-toggle slot="start" name="audioCdi" color="success" [(ngModel)]="audioCdi" (ionChange)="onaudioCdi()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                              </ion-item>
+                          </ion-col>
+                          <ion-col size="6">
+                              <ion-item>
+                                  CDD
+                                  <ion-toggle slot="start" name="audioCdd" color="success" [(ngModel)]="audioCdd" (ionChange)="onaudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                              </ion-item>
+                          </ion-col>
+                          <ion-col size="9">
+                              <ion-item>
+                                  <ion-label>Volant</ion-label>
+                                  <ion-toggle slot="start" name="audiodVolant" color="success" [(ngModel)]="audiodVolant" (ionChange)="onaudioVolant()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                              </ion-item>
+                          </ion-col>
+                        </ion-row>
+                          <ion-text color="secondary">Assistant(e) Audio</ion-text>
+                          <ion-row>
+                            <ion-col size="6">
+                                <ion-item>
+                                    <ion-label>CDI</ion-label>
+                                      <ion-toggle slot="start" name="assistantAudioCdd" color="success" [(ngModel)]="assistantAudioCdd" (ionChange)="onassistantAudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                                    </ion-item>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-item>
+                                    <ion-label>CDD</ion-label>
+                                      <ion-toggle slot="start" name="assistantAudioCdi" color="success" [(ngModel)]="assistantAudioCdi" (ionChange)="onassistantAudioCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                                </ion-item>
+                            </ion-col>
+                          </ion-row>
+                          <ion-text color="secondary">Technicien</ion-text>
+                          <ion-row>
+                            <ion-col size="6">
+                                <ion-item>
+                                    <ion-label>CDI</ion-label>
+                                      <ion-toggle slot="start" name="technicienCdi" color="success" [(ngModel)]="technicienCdi" (ionChange)="ontechnicienCdi()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                                    </ion-item>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-item>
+                                    <ion-label>CDD</ion-label>
+                                      <ion-toggle slot="start" name="technicienCdd" color="success" [(ngModel)]="technicienCdd" (ionChange)="ontechnicienCdd()" [ngModelOptions]="{standalone: true}"></ion-toggle>
+                                </ion-item>
+                            </ion-col>
+                          </ion-row>
+                      <!-- </ion-card-content>
+                    </ion-card> -->
+            </ion-col>
+          </ion-row>
+        <!-- <div style="text-align: center;">
+          <button style="color: darkblue; font-weight: bold;" mat-button matStepperNext>SUIVANT</button>
+        </div> -->
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>VOTRE MOBILITE SOUHAITEE</ng-template>
+        <!-- <mat-form-field>
+          <input matInput  formControlName="secondCtrl" >
+        </mat-form-field> -->
+        <div class="form-group">
+          <ion-item>
+            <ion-label for="region">REGION</ion-label>
+            <ion-select interface="popover" (ionChange)="onChange($event.target.value)"  name="region" id="region" formControlName="region" ngModel >
+              <!-- <ion-select-option selected>Selectionnez</ion-select-option> -->
+                <ion-select-option value="Auvergne-Rhone-Alpes">Auvergne-Rhône-Alpes</ion-select-option>
+                <ion-select-option value="Bourgogne-Franche-Comte">Bourgogne-Franche-Comté</ion-select-option>
+                <ion-select-option value="Bretagne">Bretagne</ion-select-option>
+                <ion-select-option value="Centre-Val de Loire">Centre-Val de Loire</ion-select-option>
+                <ion-select-option value="Corse">Corse</ion-select-option>
+                <ion-select-option value="Grand Est">Grand Est</ion-select-option>
+                <ion-select-option value="Hauts-de-France">Hauts-de-France</ion-select-option>
+                <ion-select-option value="Ile-de-France">Île-de-France</ion-select-option>
+                <ion-select-option value="Normandie">Normandie</ion-select-option>
+                <ion-select-option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</ion-select-option>
+                <ion-select-option value="Occitanie">Occitanie</ion-select-option>
+                <ion-select-option value="Pays de la Loire">Pays de la Loire</ion-select-option>
+                <ion-select-option value="Provence-Alpes-Cote dazur">Provence-Alpes-Côte d'Azur</ion-select-option>
+            </ion-select>
+          </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Auvergne-Rhone-Alpes' ">
+              <ion-item>
+                <ion-label name="departement">Département</ion-label>
+                <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                  <ion-select-option value="Ain">Ain</ion-select-option>
+                  <ion-select-option value="Allier">Allier</ion-select-option>
+                  <ion-select-option value="Ardeche">Ardèche</ion-select-option>
+                  <ion-select-option value="Cantal">Cantal</ion-select-option>
+                  <ion-select-option value="Drome">Drôme</ion-select-option>
+                  <ion-select-option value="Isere">Isère</ion-select-option>
+                  <ion-select-option value="Loire">Loire</ion-select-option>
+                  <ion-select-option value="Haute-Loire">Haute-Loire</ion-select-option>
+                  <ion-select-option value="Puy-de-Dome">Puy-de-Dôme</ion-select-option>
+                  <ion-select-option value="Rhone">Rhône</ion-select-option>
+                  <ion-select-option value="Savoie">Savoie</ion-select-option>
+                  <ion-select-option value="Haute-Savoie">Haute-Savoie</ion-select-option>
+                </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Bourgogne-Franche-Comte' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Cote-dor">Cote-dor</ion-select-option>
+                    <ion-select-option value="Doubs">Doubs</ion-select-option>
+                    <ion-select-option value="Jura">Jura</ion-select-option>
+                    <ion-select-option value="Nièvre">Nièvre</ion-select-option>
+                    <ion-select-option value="Haute-Saone">Haute-Saone</ion-select-option>
+                    <ion-select-option value="Saone-et-Loire">Saone-et-Loire</ion-select-option>
+                    <ion-select-option value="Yonne">Yonne</ion-select-option>
+                    <ion-select-option value="Territoire de Belfort">Territoire de Belfort</ion-select-option>
+                  </ion-select>
+                </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Bretagne' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Cotes-darmor">Cotes-darmor</ion-select-option>
+                    <ion-select-option value="Finistère">Finistère</ion-select-option>
+                    <ion-select-option value="Ille-et-Vilaine">Ille-et-Vilaine</ion-select-option>
+                    <ion-select-option value="Morbihan">Morbihan</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Centre-Val de Loire' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Cher">Cher</ion-select-option>
+                    <ion-select-option value="Eure-et-Loir">Eure-et-Loir</ion-select-option>
+                    <ion-select-option value="Indre">Indre</ion-select-option>
+                    <ion-select-option value="Indre-et-Loire">Indre-et-Loire</ion-select-option>
+                    <ion-select-option value="Loir-et-Cher">Loir-et-Cher</ion-select-option>
+                    <ion-select-option value="Loiret">Loiret</ion-select-option>
+                  </ion-select>
+              </ion-item>
+        </div>
+        <div *ngIf="regionChoisie === 'Corse' ">
+            <ion-item>
+                <ion-label name="departement">Département</ion-label>
+                <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                  <ion-select-option value="Corse-du-Sud">Corse-du-Sud</ion-select-option>
+                  <ion-select-option value="Haute-Corse">Haute-Corse</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </div>
+        <div *ngIf="regionChoisie === 'Grand Est' ">
+            <ion-item>
+                <ion-label name="departement">Département</ion-label>
+                <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                  <ion-select-option value="Ardennes">Ardennes</ion-select-option>
+                  <ion-select-option value="Aube">Aube</ion-select-option>
+                  <ion-select-option value="Marne">Marne</ion-select-option>
+                  <ion-select-option value="Haute-Marne">Haute-Marne</ion-select-option>
+                  <ion-select-option value="Meurthe-et-Moselle">Meurthe-et-Moselle</ion-select-option>
+                  <ion-select-option value="Meuse">Meuse</ion-select-option>
+                  <ion-select-option value="Moselle">Moselle</ion-select-option>
+                  <ion-select-option value="Bas-Rhin">Bas-Rhin</ion-select-option>
+                  <ion-select-option value="Puy-de-Dome">Puy-de-Dome</ion-select-option>
+                  <ion-select-option value="Haut-Rhin">Haut-Rhin</ion-select-option>
+                  <ion-select-option value="Vosges">Vosges</ion-select-option>
+                </ion-select>
+            </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Hauts-de-France' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Aisne">Aisne</ion-select-option>
+                    <ion-select-option value="Nord">Nord</ion-select-option>
+                    <ion-select-option value="Oise">Oise</ion-select-option>
+                    <ion-select-option value="Pas-de-Calais">Pas-de-Calais</ion-select-option>
+                    <ion-select-option value="Somme">Somme</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Ile-de-France' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Paris">Paris</ion-select-option>
+                    <ion-select-option value="Seine-et-Marne">Seine-et-Marne</ion-select-option>
+                    <ion-select-option value="Yvelines">Yvelines</ion-select-option>
+                    <ion-select-option value="Essonne">Essonne</ion-select-option>
+                    <ion-select-option value="Hauts-de-Seine">Hauts-de-Seine</ion-select-option>
+                    <ion-select-option value="Seine-Saint-Denis">Seine-Saint-Denis</ion-select-option>
+                    <ion-select-option value="Val-de-Marne">Val-de-Marne</ion-select-option>
+                    <ion-select-option value="Val-d'Oise">Val-d'Oise</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Normandie' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Calvados">Calvados</ion-select-option>
+                    <ion-select-option value="Eure">Eure</ion-select-option>
+                    <ion-select-option value="Manche">Manche</ion-select-option>
+                    <ion-select-option value="Orne">Orne</ion-select-option>
+                    <ion-select-option value="Seine-Maritime">Seine-Maritime</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Nouvelle-Aquitaine' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Charente">Charente</ion-select-option>
+                    <ion-select-option value="Charente-Maritime">Charente-Maritime</ion-select-option>
+                    <ion-select-option value="Corrèze">Corrèze</ion-select-option>
+                    <ion-select-option value="Creuse">Creuse</ion-select-option>
+                    <ion-select-option value="Dordogne">Dordogne</ion-select-option>
+                    <ion-select-option value="Gironde">Gironde</ion-select-option>
+                    <ion-select-option value="Landes">Landes</ion-select-option>
+                    <ion-select-option value="Lot-et-Garonne">Lot-et-Garonne</ion-select-option>
+                    <ion-select-option value="Pyrénées-Atlantiques">Pyrénées-Atlantiques</ion-select-option>
+                    <ion-select-option value="Deux-Sèvres">Deux-Sèvres</ion-select-option>
+                    <ion-select-option value="Vienne">Vienne</ion-select-option>
+                    <ion-select-option value="Haute-Vienne">Haute-Vienne</ion-select-option>
+                  </ion-select>
+                </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Occitanie' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Ariège">Ariège</ion-select-option>
+                    <ion-select-option value="Aude">Aude</ion-select-option>
+                    <ion-select-option value="Aveyron">Aveyron</ion-select-option>
+                    <ion-select-option value="Gard">Gard</ion-select-option>
+                    <ion-select-option value="Haute-Garonne">Haute-Garonne</ion-select-option>
+                    <ion-select-option value="Gers">Gers</ion-select-option>
+                    <ion-select-option value="Hérault">Hérault</ion-select-option>
+                    <ion-select-option value="Lot">Lot</ion-select-option>
+                    <ion-select-option value="Lozère">Lozère</ion-select-option>
+                    <ion-select-option value="Hautes-Pyrénées">Hautes-Pyrénées</ion-select-option>
+                    <ion-select-option value="Pyrenees-Orientales">Pyrenees-Orientales</ion-select-option>
+                    <ion-select-option value="Tarn">Tarn</ion-select-option>
+                    <ion-select-option value="Tarn-et-Garonne">Tarn-et-Garonne</ion-select-option>
+                  </ion-select>
+                </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Pays de la Loire' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Loire-Atlantique">Loire-Atlantique</ion-select-option>
+                    <ion-select-option value="Maine-et-Loire">Maine-et-Loire</ion-select-option>
+                    <ion-select-option value="Mayenne">Mayenne</ion-select-option>
+                    <ion-select-option value="Sarthe">Sarthe</ion-select-option>
+                    <ion-select-option value="Vendee">Vendee</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div *ngIf="regionChoisie === 'Provence-Alpes-Cote dazur' ">
+              <ion-item>
+                  <ion-label name="departement">Département</ion-label>
+                  <ion-select multiple="true" name="departement" id="departement" formControlName="departement" >
+                    <ion-select-option value="Alpes-de-Haute-Provence">Alpes-de-Haute-Provence</ion-select-option>
+                    <ion-select-option value="Hautes-Alpes">Hautes-Alpes</ion-select-option>
+                    <ion-select-option value="Alpes-Maritimes">Alpes-Maritimes</ion-select-option>
+                    <ion-select-option value="Bouches-du-Rhone">Bouches-du-Rhone</ion-select-option>
+                    <ion-select-option value="Var">Var</ion-select-option>
+                    <ion-select-option value="Vaucluse">Vaucluse</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </div>
+          <div class="well">
+              <ion-row>
+                  <ion-col size-sm="6" offset-sm="3">
+                    <ion-item>
+                      <ion-label position="floating">Préciser la Localite</ion-label>
+                      <ion-textarea rows="2" formControlName="localite" name="localite" id="localite"></ion-textarea>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+          </div>
+        <!-- <div>
+          <button style="color: darkblue; font-weight: bold;" mat-button matStepperPrevious>RETOUR</button>
+          <button style="color: darkblue; font-weight: bold;" mat-button matStepperNext>SUIVANT</button>
+        </div> -->
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>VOTRE EMPLOYEUR</ng-template>
+            <div>
+                <div class="well">
+                  <ion-text style="color: brown"> Est-ce qu'il y a des enseingnes pour lesquelles vous ne souhaitez pas travailler?</ion-text>
+                    <ion-row>
+                        <ion-col size-sm="6" offset-sm="3">
+                          <ion-item>
+                            <ion-label position="floating">Préciser les enseignes</ion-label>
+                            <ion-textarea rows="2" formControlName="enseignesNon" name="enseignesNon" id="enseignesNon"></ion-textarea>
+                          </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+          </form>
+    </mat-step>
+    <mat-step [stepControl]="quatriemeFormGroup">
+        <form [formGroup]="quatriemeFormGroup">
+        <ng-template matStepLabel>VOUS CONTACTER</ng-template>
+        <!-- <ion-list> -->
+            <!-- <p style="text-decoration: cyan">Nous vous proposons de vous contacter afin de vous détailler nos opportunités
+            </p> -->
+              <ion-text style="text-align: center;" color="secondary">Indiquez-nous à quel moment vous êtes joignables</ion-text>
+              <ion-item>
+                  <ion-label>Les Jours</ion-label>
+                  <ion-select multiple="true" cancelText="annuler" okText="Ok" formControlName="joursContact" name="joursContact" id="joursContact">
+                    <ion-select-option value="tous-les-jours">Tous les Jours</ion-select-option>
+                    <ion-select-option value="les-lundis">Les Lundis</ion-select-option>
+                    <ion-select-option value="les-mardis">Les Mardis</ion-select-option>
+                    <ion-select-option value="les-mercredis">Les Mercredis</ion-select-option>
+                    <ion-select-option value="les-jeudis">Les Jeudis</ion-select-option>
+                    <ion-select-option value="les-vendredis">Les Vendredis</ion-select-option>
+                  </ion-select>
+                </ion-item>            
+                <ion-item>
+                  <ion-label>Le Moment</ion-label>
+                  <ion-select multiple="true" formControlName="momentsContact" name="momentsContact" id="momentsContact">
+                    <ion-select-option value="entre-08-et-10">Entre 08H et 10H</ion-select-option>
+                    <ion-select-option value="entre-10-et-12">Entre 10H et 12H</ion-select-option>
+                    <ion-select-option value="entre-12-et-14">Entre 12H et 14H</ion-select-option>
+                    <ion-select-option value="entre-14-et-16">Entre 14H et 16H</ion-select-option>
+                    <ion-select-option value="entre-16-et-18">Entre 16H et 18H</ion-select-option>
+                    <ion-select-option value="entre-18-et-18">Entre 18H et 20H</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Numéro Télephone</ion-label>
+                    <ion-input type="number" formControlName="telephone" name="telephone" id="telephone"></ion-input>
+                  </ion-item>
+        </form><br>
+        <!-- <button style="color: darkblue; font-weight: bold;" mat-button matStepperPrevious>RETOUR</button> -->
+        <!-- <button mat-button (click)="stepper.reset()">Tout effacer</button> -->
+        <ion-button type="submit" color="primary" (click)="onSubmitt()" mat-button matStepperNext>CONFIRMER VOS CRITERES</ion-button>
+    </mat-step>
+  </mat-vertical-stepper>
+  </form>
+</ion-content>
+
 
 <!-- <form>
 <mat-vertical-stepper #stepper>
